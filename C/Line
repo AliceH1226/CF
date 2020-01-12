@@ -1,0 +1,48 @@
+
+/*
+扩展欧几里得
+裴蜀定理：对任何整数a,b,关于未知数x和y的线性丢番图方程(称为裴蜀等式):
+ax+by=c,方程有整数解当且仅当c是gcd(a,b)的倍数。裴蜀等式有解时必然有无穷多个解。
+*/
+//https://codeforces.com/contest/7/problem/C
+
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+ 
+ 
+ 
+ 
+void egcd(ll n, ll m, ll& x, ll& y, ll& d) {
+    ll x1 = 0, y1 = 1, x2 = 1, y2 = 0, q, r;
+    while (m) {
+        q = n / m; r = n % m;
+        x = x2 - q * x1;
+        y = y2 - q * y1;
+        n = m; m = r; x2 = x1; x1 = x; y2 = y1; y1 = y;
+    }
+    x = x2, y = y2, d = n;
+}
+bool dioph (ll a, ll b, ll c, ll & x, ll & y, ll & d)
+{
+    egcd (a, b, x, y, d);
+    if (c % d ) return false;
+    x *= c / d; y *= c / d;
+    return true;
+}
+ 
+int main() {
+ 
+    ll a, b, c;
+    cin >> a >> b >> c;
+    c = -c;
+    ll x, y, tmp;
+    if (!dioph (a, b, c, x, y, tmp))
+        cout << -1 << endl;
+    else
+        cout << x << ' ' << y << endl;
+	return 0;
+}
+
+
